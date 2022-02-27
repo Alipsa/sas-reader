@@ -17,7 +17,7 @@
   <licenses>
     <license>
       <name>MIT</name>
-      <url>https://github.com/perNyfelt/sas-reader/blob/master/LICENSE</url>
+      <url>https://github.com/Alipsa/sas-reader/blob/master/LICENSE</url>
     </license>
   </licenses>
   <developers>
@@ -29,9 +29,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:https://github.com/perNyfelt/sas-reader.git</connection>
-    <developerConnection>scm:git:https://github.com/perNyfelt/sas-reader.git</developerConnection>
-    <url>https://github.com/perNyfelt/sas-reader/tree/master</url>
+    <connection>scm:git:https://github.com/Alipsa/sas-reader.git</connection>
+    <developerConnection>scm:git:https://github.com/Alipsa/sas-reader.git</developerConnection>
+    <url>https://github.com/perNyfelt/Alipsa/tree/master</url>
   </scm>
   <properties>
     <renjin.version>3.5-beta76</renjin.version>
