@@ -1,5 +1,5 @@
 # sas-reader
-Renjin R package for reading sas7Bdat files
+Renjin R package for reading sas7Bdat files into a data.frame.
 
 ## Usage
 add the following dependency to your pom.xml 
