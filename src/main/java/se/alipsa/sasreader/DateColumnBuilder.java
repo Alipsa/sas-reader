@@ -2,13 +2,10 @@ package se.alipsa.sasreader;
 
 import com.epam.parso.Column;
 import org.renjin.sexp.AtomicVector;
-import org.renjin.sexp.IntArrayVector;
 import org.renjin.sexp.StringArrayVector;
+import org.renjin.sexp.StringVector;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -24,23 +21,11 @@ public class DateColumnBuilder implements ColumnBuilder {
       "E8601LX", "B8601DN", "B8601DT", "B8601DX", "B8601DZ", "B8601LX", "DATEAMPM", "DATETIME", "DTDATE", "DTMONYY",
       "DTWKDATX", "DTYEAR", "TOD", "MDYAMPM"
   );
-  //Tue Mar 14 01:00:00 CET 2017
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy");
 
-  private final IntArrayVector.Builder vector = new IntArrayVector.Builder();
+  public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ISO_DATE;
+  public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-  private static final StringArrayVector classDefinition;
-
-  static {
-    StringArrayVector.Builder builder = StringArrayVector.newBuilder();
-    builder.add("POSIXct");
-    builder.add("POSIXt");
-    classDefinition = builder.build();
-  }
-
-  public DateColumnBuilder() {
-    vector.setAttribute("class", classDefinition);
-  }
+  private final StringArrayVector.Builder vector = new StringVector.Builder();
 
   public static boolean acceptsType(Column column) {
     return "Date".equals(column.getType().getSimpleName()) || formats.contains(column.getFormat().getName());
@@ -52,8 +37,16 @@ public class DateColumnBuilder implements ColumnBuilder {
     if (val == null) {
       vector.addNA();
     } else {
-      ZonedDateTime dt = ZonedDateTime.parse(String.valueOf(val), formatter);
-      vector.add(dt.toEpochSecond());
+      if (val instanceof LocalDate) {
+        LocalDate ld = (LocalDate) val;
+        vector.add(DATE_FORMAT.format(ld));
+      } else {
+        LocalDateTime ldt = (LocalDateTime) val;
+        vector.add(DATE_TIME_FORMAT.format(ldt));
+      }
+      //System.out.println(val.getClass().getSimpleName());
+      //ZonedDateTime dt = ZonedDateTime.parse(String.valueOf(val), formatter);
+      //vector.add(dt.toEpochSecond());
     }
   }
 

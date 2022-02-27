@@ -26,3 +26,8 @@ Then in your R code simply load the package and use it as follows:
 library('se.alipsa:sas-reader')
 df <- readSas7bdat("cattle.sas7bdat")
 ```
+
+### Notes
+Dates are converted to Strings (character vectors). You need to convert it 
+with either `as.Date()` or `as.POSIXct()` depending on if you want time values or not.
+

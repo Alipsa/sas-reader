@@ -23,10 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.epam.parso.date.OutputDateType.JAVA_TEMPORAL;
+
 public class SasReader {
 
   public static SasFileReader parse(InputStream is) {
-    return new SasFileReaderImpl(is);
+    return new SasFileReaderImpl(is, null, JAVA_TEMPORAL);
   }
 
   public static String asCsv(File file, String delimiter, String rowDelimiter, Locale locale) throws IOException {
