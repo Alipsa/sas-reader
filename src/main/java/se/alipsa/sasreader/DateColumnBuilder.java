@@ -44,8 +44,8 @@ public class DateColumnBuilder implements ColumnBuilder {
     if (val == null) {
       vector.addNA();
     } else {
-      if (val instanceof LocalDateTime) {
-        throw new IllegalArgumentException(val + " in column " + columnIndex + " is a localdate time");
+      if (! (val instanceof LocalDate)) {
+        throw new IllegalArgumentException(val + " in column " + columnIndex + " is not a localdate");
       }
       LocalDate ld = (LocalDate) val;
       vector.add(ld.toEpochDay());

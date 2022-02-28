@@ -47,8 +47,8 @@ public class PosixDateColumnBuilder implements ColumnBuilder {
     if (val == null) {
       vector.addNA();
     } else {
-      if (val instanceof LocalDate) {
-        throw new IllegalArgumentException(val + " in column " + columnIndex + " is a localdate");
+      if (!(val instanceof LocalDateTime)) {
+        throw new IllegalArgumentException(val + " in column " + columnIndex + " is not a LocalDateTime");
       }
       LocalDateTime ldt = (LocalDateTime) val;
       vector.add(ldt.toEpochSecond(offset));
