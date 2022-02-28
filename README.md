@@ -28,6 +28,5 @@ df <- readSas7bdat("cattle.sas7bdat")
 ```
 
 ### Notes
-Dates are converted to Strings (character vectors). You need to convert it 
-with either `as.Date()` or `as.POSIXct()` depending on if you want time values or not.
+Dates are converted to either `Date` or `POSIXct` depending on the format defined for the column in SAS.
 

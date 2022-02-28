@@ -4,10 +4,15 @@ library('se.alipsa:sas-reader')
 test.dateFormats <- function() {
   df <- readSas7bdat("date_formats.sas7bdat")
   assertThat(ncol(df), equalTo(67))
-  # str(df[1,1])
-  assertThat(as.Date(df[1,1]), equalTo(as.Date("2017-03-14")))
-  # str(df$datetime[1])
-  assertThat(as.POSIXct(df$datetime[1]), equalTo(as.POSIXct("2017-03-14 15:36:56")))
+
+  for (col in 1:49) {
+    # str(df[1,col])
+    assertThat(df[1,col], equalTo(as.Date("2017-03-14")))
+  }
+  for (col in 50:67) {
+    # str(df$datetime[1])
+    assertThat(df$datetime[1], equalTo(as.POSIXct("2017-03-14 15:36:56")))
+  }
 }
 
 test.cattle <- function() {

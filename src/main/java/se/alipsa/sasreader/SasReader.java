@@ -81,12 +81,16 @@ public class SasReader {
       for (Column column : columns) {
         if (DateColumnBuilder.acceptsType(column)) {
           builders.add(new DateColumnBuilder());
+        } else if (PosixDateColumnBuilder.acceptsType(column)) {
+          builders.add(new PosixDateColumnBuilder());
         } else if (DoubleColumnBuilder.acceptsType(column)) {
           builders.add(new DoubleColumnBuilder());
         } else if (StringColumnBuilder.acceptsType(column)) {
           builders.add(new StringColumnBuilder());
         } else if (LongColumnBuilder.acceptsType(column)) {
           builders.add(new LongColumnBuilder());
+        } else if (DateStringColumnBuilder.acceptsType(column)) {
+          builders.add(new DateStringColumnBuilder());
         } else {
           throw new EvalException("Unknown column type " + column);
         }
@@ -96,7 +100,13 @@ public class SasReader {
       for (long i = 0; i < rowCount; i++) {
         Object[] row = reader.readNext();
         for (int j = 0; j < numColumns; j++) {
-          builders.get(j).addValue(row, j);
+          try {
+            builders.get(j).addValue(row, j);
+          } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(" value " + row[j] + " in "
+                + columnInfo(columns.get(j)) + " in col " + j + " is not interpreted correctly",
+                e);
+          }
         }
       }
       /* call build() on each column and add them as named cols to df */
@@ -111,6 +121,12 @@ public class SasReader {
       return dataFrame.build();
 
     }
+  }
+
+  private static String columnInfo(Column column) {
+    return column == null ? null : column.getName()
+        + ", type = " + column.getType().getSimpleName()
+        + ", format = " + (column.getFormat() == null ? null : column.getFormat().getName());
   }
 
 }

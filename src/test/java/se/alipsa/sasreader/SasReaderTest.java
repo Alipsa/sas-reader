@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,15 +45,15 @@ public class SasReaderTest {
     ListVector vector = SasReader.asDataFrame(file.getAbsolutePath());
     assertEquals(67, vector.length());
     for (int i = 0; i < 49; i++) {
-      String date = vector.getElementAsString(i);
+      int date = vector.getElementAsInt(i);
       //System.out.println(i + ". " + date + " = " + LocalDate.ofEpochDay(date));
-      assertEquals(LocalDate.of(2017, 3, 14), LocalDate.parse(date), "index " + i);
+      assertEquals(LocalDate.of(2017, 3, 14), LocalDate.ofEpochDay(date), "index " + i);
     }
     for (int i = 49; i < 67; i++) {
-      String date = vector.getElementAsString(i);
+      long date = (long)vector.getElementAsDouble(i);
       assertEquals(LocalDateTime.of(2017, 3, 14,15,36, 56),
-          LocalDateTime.parse(date, DateColumnBuilder.DATE_TIME_FORMAT),
-          "index " + i + ". " + date + " = " + LocalDateTime.parse(date, DateColumnBuilder.DATE_TIME_FORMAT));
+          LocalDateTime.ofEpochSecond(date, 0, OffsetDateTime.now().getOffset()),
+          "index " + i + ". " + date + " = " + LocalDateTime.ofEpochSecond(date, 0, OffsetDateTime.now().getOffset()));
     }
   }
 }
