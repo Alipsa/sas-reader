@@ -30,3 +30,16 @@ df <- readSas7bdat("cattle.sas7bdat")
 ### Notes
 Dates are converted to either `Date` or `POSIXct` depending on the format defined for the column in SAS.
 
+## 3:rd Party dependencies
+
+### org.renjin:renjin-script-engine
+The R platform this package is for. GNU General Public License v2.0
+
+### com.epam:parso
+Parses sas7bdat files. Apache License 2.0
+
+### org.slf4j:slf4j-api
+Logging library. MIT Licence
+
+
+
