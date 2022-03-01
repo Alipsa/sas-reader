@@ -7,11 +7,11 @@ add the following dependency to your pom.xml
 <dependency>
     <groupId>se.alipsa</groupId>
     <artifactId>sas-reader</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 ```
-
-If you want to use a snapshot, add the following repository to your repositories section
+Regular releases are available on maven central so no additional settings are required.
+If you want to use a snapshot however, you need to add the following repository to your repositories section
 ```xml
     <repository>
         <id>snapshots-repo</id>
@@ -24,7 +24,7 @@ If you want to use a snapshot, add the following repository to your repositories
 Then in your R code simply load the package and use it as follows:
 ```r
 library('se.alipsa:sas-reader')
-df <- readSas7bdat("cattle.sas7bdat")
+df <- readSas7bdat(paste0(getwd(), "/cattle.sas7bdat"))
 ```
 
 ### Notes
