@@ -38,7 +38,7 @@ public class PosixDateColumnBuilder implements ColumnBuilder {
   }
 
   public static boolean acceptsType(Column column) {
-    return "Date".equals(column.getType().getSimpleName()) || formats.contains(column.getFormat().getName());
+    return formats.contains(column.getFormat().getName());
   }
 
   @Override
